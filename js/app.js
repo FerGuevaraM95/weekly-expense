@@ -68,6 +68,24 @@ class Interfaz {
         const presupuestoRestanteUsuario = cantidadPresupuesto.presupuestoRestante(cantidad);
         // Actualizando el restante
         restante.innerHTML = `${presupuestoRestanteUsuario}`;
+
+        this.comprobarPresupuesto();
+    }
+    // Cambiar el color del presupuesto restante
+    comprobarPresupuesto() {
+        const presupuestoTotal = cantidadPresupuesto.presupuesto;
+        const presupuestoRestante = cantidadPresupuesto.restante;
+
+        // Comprobar el 25%
+        if(presupuestoTotal / 4 > presupuestoRestante) {
+            const restante = document.querySelector('.restante');
+            restante.classList.remove('alert-succes', 'alert-warning');
+            restante.classList.add('alert-danger');
+        } else if((presupuestoTotal / 2) > presupuestoRestante) {
+            const restante = document.querySelector('.restante');
+            restante.classList.remove('alert-success');
+            restante.classList.add('alert-warning');
+        }
     }
 }
 
@@ -78,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.reload();
     } else {
         cantidadPresupuesto = new Presupuesto(presupuestoUsuario);
-        console.log(cantidadPresupuesto);
         // Instanciar la clase de interfaz
         const ui = new Interfaz();
         ui.insertarPresupuesto(cantidadPresupuesto.presupuesto);
